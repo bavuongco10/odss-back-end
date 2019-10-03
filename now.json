@@ -24,17 +24,7 @@
       }
     },
     {
-      "src": "/sources/(.*)",
-      "dest": "/index.js",
-      "methods": ["GET", "POST", "PUT", "PATCH", "OPTIONS"],
-      "headers": {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, PATCH, OPTIONS, PUT",
-        "Access-Control-Allow-Headers": "Authorization, Accept, Content-Type"
-      }
-    },
-    {
-      "src": "/results/(.*)",
+      "src": "/api/(.*)",
       "dest": "/index.js",
       "methods": ["GET", "POST", "PUT", "PATCH", "OPTIONS"],
       "headers": {

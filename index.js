@@ -53,8 +53,8 @@ app.use(function(req, res, next) {
 
 app.use('/feed', feedRoutes);
 app.use('/auth', authRoutes);
-app.use('/', sourcesRoutes);
-app.use('/', resultsRoutes);
+app.use('/api', sourcesRoutes);
+app.use('/api', resultsRoutes);
 
 app.use((error, req, res, next) => {
   console.log(error);
