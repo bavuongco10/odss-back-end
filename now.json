@@ -1,0 +1,52 @@
+{
+  "version": 2,
+  "name": "odss-back-end",
+  "builds": [{ "src": "index.js", "use": "@now/node-server" }],
+  "routes": [
+    {
+      "src": "/feed/(.*)",
+      "dest": "/index.js",
+      "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, DELETE PUT, OPTIONS",
+        "Access-Control-Allow-Headers": "Authorization, Accept, Content-Type"
+      }
+    },
+    {
+      "src": "/auth/(.*)",
+      "dest": "/index.js",
+      "methods": ["GET", "POST", "PUT", "PATCH", "OPTIONS"],
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PATCH, OPTIONS, PUT",
+        "Access-Control-Allow-Headers": "Authorization, Accept, Content-Type"
+      }
+    },
+    {
+      "src": "/sources/(.*)",
+      "dest": "/index.js",
+      "methods": ["GET", "POST", "PUT", "PATCH", "OPTIONS"],
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PATCH, OPTIONS, PUT",
+        "Access-Control-Allow-Headers": "Authorization, Accept, Content-Type"
+      }
+    },
+    {
+      "src": "/results/(.*)",
+      "dest": "/index.js",
+      "methods": ["GET", "POST", "PUT", "PATCH", "OPTIONS"],
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PATCH, OPTIONS, PUT",
+        "Access-Control-Allow-Headers": "Authorization, Accept, Content-Type"
+      }
+    },
+    { "src": "/redirect", "status": 301, "headers": { "Location": "https://zeit.co/" } },
+    {
+      "src": "/healthcheck",
+      "dest": "/index.js"
+    }
+  ]
+}
