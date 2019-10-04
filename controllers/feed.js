@@ -20,7 +20,7 @@ exports.getPosts = (req, res, next) => {
     })
     .then(posts => {
       res.status(200).json({
-        message: 'Fetched posts successfully.',
+        message: 'Fetched successfully.',
         posts: posts,
         totalItems: totalItems
       });
@@ -67,7 +67,7 @@ exports.createPost = (req, res, next) => {
     })
     .then(result => {
       res.status(201).json({
-        message: 'Post created successfully!',
+        message: 'Post successfully!',
         post: post,
         creator: { _id: creator._id, name: creator.name }
       });

@@ -10,6 +10,8 @@ const feedRoutes = require('./routes/feed.js');
 const authRoutes = require('./routes/auth.js');
 const sourcesRoutes = require('./src/sources/sources.routes');
 const resultsRoutes = require('./src/results/results.routes');
+const hotelsRoutes = require('./src/hotels/hotels.routes');
+const citiesRoutes = require('./src/cities/cities.routes');
 
 const app = express();
 const server = http.createServer(app);
@@ -55,6 +57,8 @@ app.use('/feed', feedRoutes);
 app.use('/auth', authRoutes);
 app.use('/api', sourcesRoutes);
 app.use('/api', resultsRoutes);
+app.use('/api', hotelsRoutes);
+app.use('/api', citiesRoutes);
 
 app.use((error, req, res, next) => {
   console.log(error);

@@ -15,7 +15,7 @@ exports.getSources = (req, res, next) => {
     })
     .then(items => {
       res.status(200).json({
-        message: 'Fetched sources successfully.',
+        message: 'Fetched successfully.',
         items,
         totalItems: totalItems,
         page: currentPage,
