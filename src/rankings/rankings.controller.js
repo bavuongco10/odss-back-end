@@ -1,4 +1,4 @@
-const {map, uniqBy, find, toNumber, uniq} = require('lodash');
+const {map, uniqBy, find, toNumber, uniq, sortBy} = require('lodash');
 const Rakings = require('./rankings.model');
 const Hotels = require('../hotels/hotels.model');
 
@@ -7,12 +7,21 @@ exports.getRankings = (req, res, next) => {
   const travelType = req.query.travelType;
   const stayLength = req.query.stayLength || 1;
 
+  const payload = {};
+  if (cityId) {
+    payload['city_id'] = cityId
+  }
+  if (travelType) {
+    payload['travel_type_name'] = travelType
+  }
+
   Rakings.find(
-    {city_id: cityId},
+    payload,
     {hotel_id: 1, _id: 0, Ri: 1, stay_length: 1, city_id: 1, travel_type_name: 1}
   ).limit(100)
     .then(items => {
-      const hotelIds = uniq(map(items, 'hotel_id'));
+      const sortedRankings = sortBy(items, [(o) => Math.abs(o.stay_length - stayLength)]);
+      const hotelIds = uniq(map(sortedRankings, 'hotel_id'));
       return Hotels.find({
         _id: {'$in': hotelIds}
       }).then(hotels => {
@@ -22,7 +31,6 @@ exports.getRankings = (req, res, next) => {
             return {
               _id, name, accommodationType, address, cover, summaryReview,
               Ri: hotelObj.Ri,
-              // absStayCompare: Math.abs(hotelObj.stay_length - stayLength)
             }
           });
         return res.status(200).json({
