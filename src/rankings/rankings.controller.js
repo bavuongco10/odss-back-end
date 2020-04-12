@@ -18,11 +18,13 @@ exports.getRankings = (req, res, next) => {
   Rakings.find(
     payload,
     {hotel_id: 1, _id: 0, Ri: 1, stay_length: 1, city_id: 1, travel_type_name: 1}
-  ).limit(100)
+  ).limit(10)
     .then(items => {
-      const newItems = map(items, item => ({
-        ...item,
-        stayDiff: Math.abs(item.stay_length - stayLength)
+      const newItems = map(items, ({ stay_length, Ri, hotel_id}) => ({
+        stay_length,
+        Ri,
+        hotel_id,
+        stayDiff: Math.abs(stay_length - stayLength)
       }));
       const sortedRankings = sortBy(newItems, ['stayDiff', 'Ri']);
       const hotelIds = uniq(map(sortedRankings, 'hotel_id'));
