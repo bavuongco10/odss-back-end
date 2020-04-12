@@ -20,7 +20,11 @@ exports.getRankings = (req, res, next) => {
     {hotel_id: 1, _id: 0, Ri: 1, stay_length: 1, city_id: 1, travel_type_name: 1}
   ).limit(100)
     .then(items => {
-      const sortedRankings = sortBy(items, [(o) => Math.abs(o.stay_length - stayLength)]);
+      const newItems = map(items, item => ({
+        ...item,
+        stayDiff: Math.abs(item.stay_length - stayLength)
+      }));
+      const sortedRankings = sortBy(newItems, ['stayDiff', 'Ri']);
       const hotelIds = uniq(map(sortedRankings, 'hotel_id'));
       return Hotels.find({
         _id: {'$in': hotelIds}
