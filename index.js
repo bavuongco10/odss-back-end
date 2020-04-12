@@ -1,5 +1,5 @@
 const path = require('path');
-const { createTerminus } = require('@godaddy/terminus');
+const {createTerminus} = require('@godaddy/terminus');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -12,6 +12,9 @@ const sourcesRoutes = require('./src/sources/sources.routes');
 const resultsRoutes = require('./src/results/results.routes');
 const hotelsRoutes = require('./src/hotels/hotels.routes');
 const citiesRoutes = require('./src/cities/cities.routes');
+const searchesRoutes = require('./src/searches/searches.routes');
+const travelsRoutes = require('./src/travels/travels.routes');
+const rankingsRoutes = require('./src/rankings/rankings.routes');
 
 const app = express();
 const server = http.createServer(app);
@@ -39,11 +42,11 @@ const fileFilter = (req, file, cb) => {
 
 app.use(bodyParser.json()); // application/json
 app.use(
-  multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
+  multer({storage: fileStorage, fileFilter: fileFilter}).single('image')
 );
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   res.setHeader(
@@ -59,34 +62,40 @@ app.use('/api', sourcesRoutes);
 app.use('/api', resultsRoutes);
 app.use('/api', hotelsRoutes);
 app.use('/api', citiesRoutes);
+app.use('/api', travelsRoutes);
+app.use('/api', rankingsRoutes);
+app.use('/api/search', searchesRoutes);
 
 app.use((error, req, res, next) => {
   console.log(error);
   const status = error.statusCode || 500;
   const message = error.message;
   const data = error.data;
-  res.status(status).json({ message: message, data: data });
+  res.status(status).json({message: message, data: data});
 });
 
-function onSignal () {
+function onSignal() {
   console.log('server is starting cleanup')
   // start cleanup of resource, like databases or file descriptors
 }
 
-async function onHealthCheck () {
+async function onHealthCheck() {
   // checks if the system is healthy, like the db connection is live
   // resolves, if health, rejects if not
 }
 
 createTerminus(server, {
   signal: 'SIGINT',
-  healthChecks: { '/healthcheck': onHealthCheck },
+  healthChecks: {'/healthcheck': onHealthCheck},
   onSignal
 });
 
 mongoose
   .connect(
-'mongodb+srv://user1:34ggGqEofC6xRclb@cluster0-lbv81.mongodb.net/odss?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }
+    'mongodb+srv://user1:34ggGqEofC6xRclb@cluster0-lbv81.mongodb.net/odss?retryWrites=true&w=majority', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    }
   )
   .then(result => {
     server.listen(8080);

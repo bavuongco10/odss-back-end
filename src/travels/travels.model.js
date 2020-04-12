@@ -3,4 +3,4 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
 }, {timestamps: true, strict:false });
-module.exports = mongoose.model('Cities', schema, 'Cities');
+module.exports = mongoose.model('Travels', schema, 'Travels');
