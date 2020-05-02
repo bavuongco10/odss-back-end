@@ -15,6 +15,7 @@ const citiesRoutes = require('./src/cities/cities.routes');
 const searchesRoutes = require('./src/searches/searches.routes');
 const travelsRoutes = require('./src/travels/travels.routes');
 const rankingsRoutes = require('./src/rankings/rankings.routes');
+const dashboardRoutes = require('./src/dashboard/dashboard.routes');
 
 const app = express();
 const server = http.createServer(app);
@@ -65,6 +66,7 @@ app.use('/api', citiesRoutes);
 app.use('/api', travelsRoutes);
 app.use('/api', rankingsRoutes);
 app.use('/api/search', searchesRoutes);
+app.use('/api', dashboardRoutes);
 
 app.use((error, req, res, next) => {
   console.log(error);
