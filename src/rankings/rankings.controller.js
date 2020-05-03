@@ -1,6 +1,7 @@
 const {map, uniqBy, find, toNumber, uniq, sortBy} = require('lodash');
 const Rakings = require('./rankings.model');
 const Hotels = require('../hotels/hotels.model');
+const Cities = require('../cities/cities.model');
 
 exports.getRankings = (req, res, next) => {
   const cityId = toNumber(req.query.cityId);
@@ -70,6 +71,32 @@ exports.getInitialRankings = (req, res, next) => {
               _id, name, accommodationType, address, cover, summaryReview,
               Ri: find(items, ['hotel_id', _id]).Ri
             }))
+        });
+      })
+    })
+    .catch(err => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
+};
+
+
+exports.getCitiesInitial =  (req, res, next) => {
+  Rakings.aggregate([
+    {$sample: {size: 50}},
+    {$match: {Ri: {$gt: 3}}},
+    {$project: {city_id: 1, _id: 0, Ri: 1}},
+  ])
+    .then(items => {
+      const citiesIds = map(uniqBy(items, 'city_id'), 'city_id');
+      return Cities.find({
+        _id: {'$in': citiesIds}
+      }).then(items => {
+        return res.status(200).json({
+          message: 'Fetched successfully.',
+          items
         });
       })
     })

@@ -1,7 +1,6 @@
 const {isEmpty, toNumber, map, get} = require('lodash');
 
 const Cities = require('./cities.model');
-
 exports.getCities = (req, res, next) => {
   Cities.find().then(items => {
       res.status(200).json({
