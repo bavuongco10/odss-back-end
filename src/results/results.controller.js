@@ -1,16 +1,17 @@
 const { toNumber, sumBy, size, round, first } = require('lodash');
 const Results = require('./results.model');
+const Rankings = require('../rankings/rankings.model');
 
 exports.getResults = (req, res, next) => {
   const currentPage = toNumber(req.query.page) || 0;
   const currentOffset = toNumber(req.query.offset) || 10;
   let totalItems;
 
-  Results.find()
+  Rankings.find()
     .countDocuments()
     .then(count => {
       totalItems = count;
-      return Results.find()
+      return Rankings.find()
         .skip((currentPage) * currentOffset)
         .limit(currentOffset);
     })
