@@ -261,11 +261,11 @@ exports.getHotelsPivot = (req, res, next) => {
 
 exports.getRankingHotelsPivot = (req, res, next) => {
   const items = [
-    {rate: 1, hotels: 176},
-    {rate: 2, hotels: 1100},
-    {rate: 3, hotels: 4029},
-    {rate: 4, hotels: 5656},
-    {rate: 5, hotels: 3073}
+    {rate: 1, hotels: 12},
+    {rate: 2, hotels: 54},
+    {rate: 3, hotels: 147},
+    {rate: 4, hotels: 209},
+    {rate: 5, hotels: 99}
   ]
 
   return res.status(200).json({
