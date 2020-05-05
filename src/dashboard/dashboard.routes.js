@@ -4,6 +4,9 @@ const dashboardController = require('./dashboard.controller');
 
 const router = express.Router();
 const mockIsAuth = (req, res, next) => {next()};
+
+router.get('/summary', mockIsAuth, dashboardController.getSummary);
+
 router.get('/hotels-pivot', mockIsAuth, dashboardController.getHotelsPivot);
 
 router.get('/ranking-hotels-pivot', mockIsAuth, dashboardController.getRankingHotelsPivot);

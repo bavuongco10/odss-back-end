@@ -1,4 +1,5 @@
 const {isEmpty, toNumber, map, get} = require('lodash');
+const Sources = require('../sources/sources.model');
 
 exports.getHotelsPivot = (req, res, next) => {
   const items = [
@@ -320,5 +321,24 @@ exports.getFeatures = (req, res, next) => {
     message: 'Fetched successfully.',
     items
   });
+}
+
+exports.getSummary =  (req, res, next) => {
+  Sources.find().countDocuments().then(sources => {
+    Sources.distinct('city_id').then(cities => {
+      Sources.distinct('hotel_id').then(hotels => {
+
+          return res.status(200).json({
+            message: 'Fetched successfully.',
+            item: {
+              sources: sources,
+              cities: cities.length,
+              hotels: hotels.length
+            }
+          });
+      })
+    })
+
+  })
 }
 
