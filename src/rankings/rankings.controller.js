@@ -84,7 +84,6 @@ exports.getInitialRankings = (req, res, next) => {
 
 
 exports.getCitiesInitial =  (req, res, next) => {
-  Rakings.distinct('room_type_name').then(result => console.log(result))
   Rakings.aggregate([
     {$sample: {size: 50}},
     {$match: {Ri: {$gt: 3}}},
