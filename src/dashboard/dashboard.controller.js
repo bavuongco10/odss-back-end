@@ -1,4 +1,4 @@
-const {isEmpty, toNumber, map, get} = require('lodash');
+const {isEmpty, toNumber, map, get, sortBy} = require('lodash');
 const Sources = require('../sources/sources.model');
 const Rankings = require('../rankings/rankings.model');
 
@@ -276,51 +276,51 @@ exports.getRankingHotelsPivot = (req, res, next) => {
 
 exports.getFeatures = (req, res, next) => {
   const items = [
-    'khách sạn',
-    'view',
-    'món ăn',
-    'thiết bị',
-   'ban công',
-    'phòng',
-    'lễ tân',
-    'nội thất',
-    'vệ sinh',
-    'cảnh',
-    'nhân viên',
-    'không gian',
-    'thang máy',
-    'Wifi',
-    'Đèn',
-    'giá',
-    'thái độ',
-    'xe máy',
-    'Toilet',
-    'sảnh',
-    'biển',
-    'nhà hàng',
-    'máy lạnh',
-    'Khuôn viên',
-    'diện tích',
-    'vị trí',
-    'mùi',
-    'Khăn',
-    'bãi tắm',
-    'bồn tắm',
-    'dịch vụ',
-    'bể bơi',
-    'cửa sổ',
-    'hành lang',
-    'Bar',
-    'giường',
-    'thức ăn',
-    'tủ lạnh',
-    'hướng',
-    'bếp'
+    { name: 'khách sạn', importantRate: 0.612},
+    { name: 'view', importantRate: 0.32},
+    { name: 'món ăn', importantRate: 0.095},
+    { name: 'thiết bị', importantRate: 0.051},
+    { name: 'ban công', importantRate: 0.037},
+    { name: 'phòng', importantRate: 0},
+    { name: 'lễ tân', importantRate: 0.086},
+    { name: 'nội thất', importantRate: 0.05},
+    { name: 'vệ sinh', importantRate: 0.242},
+    { name: 'cảnh', importantRate: 0.208},
+    { name: 'nhân viên', importantRate: 1},
+    { name: 'không gian', importantRate: 0.173},
+    { name: 'thang máy', importantRate: 0.095},
+    { name: 'Wifi', importantRate: 0.016},
+    { name: 'Đèn', importantRate: 0.01},
+    { name: 'giá', importantRate: 0.498},
+    { name: 'thái độ', importantRate: 0.156},
+    { name: 'xe máy', importantRate: 0.131},
+    { name: 'Toilet', importantRate: 0.082},
+    { name: 'sảnh', importantRate: 0},
+    { name: 'biển', importantRate: 0.735},
+    { name: 'nhà hàng', importantRate: 0.147},
+    { name: 'máy lạnh', importantRate: 0.092},
+    { name: 'Khuôn viên', importantRate: 0.029},
+    { name: 'diện tích', importantRate: 0.011},
+    { name: 'vị trí', importantRate: 0.334},
+    { name: 'mùi', importantRate: 0.314},
+    { name: 'Khăn', importantRate: 0.13},
+    { name: 'bãi tắm', importantRate: 0.038},
+    { name: 'bồn tắm', importantRate: 0.026},
+    { name: 'dịch vụ', importantRate: 0.201},
+    { name: 'bể bơi', importantRate: 0.128},
+    { name: 'cửa sổ', importantRate: 0.017},
+    { name: 'hành lang', importantRate: 0.019},
+    { name: 'Bar', importantRate: 0.067},
+    { name: 'giường', importantRate: 0.151},
+    { name: 'thức ăn', importantRate: 0.032},
+    { name: 'tủ lạnh', importantRate: 0.015},
+    { name: 'hướng', importantRate: 0.092},
+    { name: 'bếp', importantRate: 0.027}
   ]
 
   return res.status(200).json({
     message: 'Fetched successfully.',
-    items
+    items: sortBy(items, item => -item.importantRate)
   });
 }
 
